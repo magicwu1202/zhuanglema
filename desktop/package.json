@@ -1,0 +1,31 @@
+{
+  "name": "zhuanglema-desktop",
+  "version": "1.0.0",
+  "description": "装了吗 - 今天你装了吗？一键安装编程软件的桌面 APP",
+  "main": "electron/main.cjs",
+  "private": true,
+  "scripts": {
+    "dev:vite": "vite",
+    "dev:electron": "wait-on tcp:5173 && electron .",
+    "dev": "concurrently -k \"npm:dev:vite\" \"npm:dev:electron\"",
+    "build": "vite build",
+    "start": "npm run build && electron ."
+  },
+  "dependencies": {
+    "highlight.js": "^11.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "rehype-highlight": "^7.0.1",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.0",
+    "wait-on": "^8.0.1"
+  }
+}

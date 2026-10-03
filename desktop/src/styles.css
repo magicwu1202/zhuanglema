@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "highlight.js/styles/github-dark.css";
+
+/* ── 「装了吗」漫画贴纸风主题 ── */
+@theme {
+  --color-paper: #fff7e8;
+  --color-ink: #211a14;
+  --color-tomato: #ff4d2e;
+  --color-lemon: #ffc83d;
+  --color-mint: #2ec4a0;
+  --color-sky: #3e8ef0;
+  --color-cream: #fffdf6;
+  --font-display: "ZCOOL KuaiLe", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  /* 纸面点阵纹理 */
+  background-image: radial-gradient(rgba(33, 26, 20, 0.08) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: var(--font-display); }
+
+/* 贴纸卡片：粗描边 + 硬阴影 */
+.sticker {
+  background: var(--color-cream);
+  border: 3px solid var(--color-ink);
+  border-radius: 18px;
+  box-shadow: 5px 5px 0 var(--color-ink);
+}
+
+.sticker-press {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: pointer;
+}
+.sticker-press:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--color-ink); }
+.sticker-press:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--color-ink); }
+
+/* 主按钮 */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  border: 3px solid var(--color-ink);
+  border-radius: 14px;
+  padding: 10px 20px;
+  font-weight: 700;
+  box-shadow: 4px 4px 0 var(--color-ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--color-ink); }
+.btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--color-ink); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--color-ink); border-radius: 8px; border: 2px solid var(--color-paper); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Markdown 内容样式 */
+.md-body { line-height: 1.75; font-size: 15px; }
+.md-body h2 {
+  font-family: var(--font-display);
+  font-size: 22px; margin: 28px 0 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.md-body h2::before { content: "✦"; color: var(--color-tomato); }
+.md-body h3 { font-weight: 800; font-size: 17px; margin: 20px 0 8px; }
+.md-body p { margin: 10px 0; }
+.md-body ul, .md-body ol { padding-left: 24px; margin: 10px 0; }
+.md-body ul { list-style: disc; }
+.md-body ol { list-style: decimal; }
+.md-body li { margin: 6px 0; }
+.md-body a { color: var(--color-sky); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.md-body code:not(pre code) {
+  background: #ffe9b8; border: 1.5px solid var(--color-ink); border-radius: 6px;
+  padding: 1px 6px; font-size: 13px;
+}
+.md-body table { border-collapse: collapse; margin: 12px 0; }
+.md-body th, .md-body td { border: 2px solid var(--color-ink); padding: 6px 12px; }
+.md-body blockquote { border-left: 4px solid var(--color-lemon); padding-left: 12px; opacity: 0.85; }
+
+/* 代码块容器 */
+.code-card {
+  border: 3px solid var(--color-ink);
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 14px 0;
+  box-shadow: 4px 4px 0 var(--color-ink);
+  background: #16140f;
+}
+.code-card pre { padding: 14px 16px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+.code-card pre code { background: transparent; }
+
+/* 终端日志 */
+.term {
+  background: #16140f; color: #d8f3e6;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12.5px; line-height: 1.65;
+  white-space: pre-wrap; word-break: break-all;
+}
+
+/* 入场动画 */
+@keyframes popIn {
+  0% { opacity: 0; transform: translateY(14px) scale(0.97); }
+  /* 结束帧必须是 none：残留 transform 会让内部 fixed 弹窗相对此元素定位 */
+  100% { opacity: 1; transform: none; }
+}
+.pop-in { animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+.wobble { animation: wobble 2.4s ease-in-out infinite; display: inline-block; }
+
+@keyframes blink { 50% { opacity: 0; } }
+.cursor-blink::after { content: "▍"; animation: blink 0.9s steps(1) infinite; color: var(--color-tomato); }
+
+/* 跑马灯安装中 */
+@keyframes marquee { 0% { background-position: 0 0; } 100% { background-position: 56px 0; } }
+.stripe-running {
+  background-image: repeating-linear-gradient(45deg, var(--color-lemon) 0 14px, #ffd96b 14px 28px);
+  animation: marquee 0.8s linear infinite;
+}

@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import "highlight.js/styles/github-dark.css";
+
+/* ── 「装了吗」管理后台：暖墨色工作台 ── */
+@theme {
+  --color-ink: #211a14;
+  --color-ink2: #2d251c;
+  --color-ink3: #3a3024;
+  --color-paper: #fff7e8;
+  --color-cream: #fffdf6;
+  --color-tomato: #ff4d2e;
+  --color-lemon: #ffc83d;
+  --color-mint: #2ec4a0;
+  --color-sky: #5ea3f5;
+  --font-display: "ZCOOL KuaiLe", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  background-image: radial-gradient(rgba(255, 247, 232, 0.05) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: var(--font-display); }
+
+.panel {
+  background: var(--color-ink2);
+  border: 2.5px solid rgba(255, 247, 232, 0.85);
+  border-radius: 16px;
+  box-shadow: 5px 5px 0 rgba(255, 200, 61, 0.35);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; justify-content: center;
+  border: 2.5px solid var(--color-paper);
+  border-radius: 12px;
+  padding: 7px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-paper);
+  background: transparent;
+  box-shadow: 3px 3px 0 rgba(255, 200, 61, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 rgba(255, 200, 61, 0.5); }
+.btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(255, 200, 61, 0.35); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-primary { background: var(--color-tomato); border-color: var(--color-tomato); }
+.btn-mint { background: var(--color-mint); border-color: var(--color-mint); color: #14110c; }
+.btn-lemon { background: var(--color-lemon); border-color: var(--color-lemon); color: #14110c; }
+
+.input {
+  background: var(--color-ink3);
+  border: 2.5px solid rgba(255, 247, 232, 0.5);
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-paper);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input:focus { border-color: var(--color-lemon); }
+.input::placeholder { color: rgba(255, 247, 232, 0.35); }
+
+table.grid-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.grid-table th {
+  text-align: left; padding: 10px 12px; font-weight: 800;
+  border-bottom: 2.5px solid rgba(255, 247, 232, 0.7);
+  color: var(--color-lemon);
+  white-space: nowrap;
+}
+.grid-table td { padding: 10px 12px; border-bottom: 1.5px dashed rgba(255, 247, 232, 0.18); }
+.grid-table tr:hover td { background: rgba(255, 247, 232, 0.04); }
+
+.tag {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 800; border: 2px solid currentColor;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(255, 247, 232, 0.3); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Markdown 预览（深色） */
+.md-body { line-height: 1.75; font-size: 14px; }
+.md-body h2 { font-family: var(--font-display); font-size: 20px; margin: 22px 0 10px; color: var(--color-lemon); }
+.md-body h3 { font-weight: 800; font-size: 16px; margin: 16px 0 8px; }
+.md-body p { margin: 8px 0; }
+.md-body ul, .md-body ol { padding-left: 22px; margin: 8px 0; }
+.md-body ul { list-style: disc; }
+.md-body ol { list-style: decimal; }
+.md-body li { margin: 5px 0; }
+.md-body a { color: var(--color-sky); text-decoration: underline; }
+.md-body code:not(pre code) {
+  background: var(--color-ink3); border: 1px solid rgba(255,247,232,0.3);
+  border-radius: 5px; padding: 1px 6px; font-size: 12.5px;
+}
+.md-body pre {
+  background: #14110c; border: 2px solid rgba(255,247,232,0.4); border-radius: 12px;
+  padding: 14px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; margin: 12px 0;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+  /* 结束帧必须是 none：残留 transform 会让内部 fixed 弹窗相对此元素定位 */
+  100% { opacity: 1; transform: none; }
+}
+.pop-in { animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* 统计条 */
+.bar-track { background: var(--color-ink3); border-radius: 8px; height: 22px; overflow: hidden; border: 1.5px solid rgba(255,247,232,0.25); }
+.bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
